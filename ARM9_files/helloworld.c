@@ -147,10 +147,12 @@ int main()
             printf("S: Serial Information\r\n");
             printf("t: Trigger mode\r\n");
             printf("n: Button - acquire\r\n");
+            printf("P: Set function frequency in Hz\r\n");
             printf("+: Increase voltage trigger\r\n");
             printf("-: Decrease voltage trigger\r\n");
             printf("v: Reset voltage trigger back to 0\r\n");
             printf("u: Display last 64 values of waveform\r\n");
+            printf("m: Change oscilloscope sampling rate\r\n")
             break;
 
         case 'r':
