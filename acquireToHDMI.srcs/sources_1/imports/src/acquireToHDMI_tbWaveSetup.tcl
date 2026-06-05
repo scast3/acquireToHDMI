@@ -1,7 +1,3 @@
-#################################################################################
-# cd C:/Users/santi/OneDrive/Documents/Mines\ 5th\ Year/Digital\ Design/acquireToHDMI
-# source acquireToHDMI_tbWaveSetup.tcl
-#################################################################################
 restart
 remove_wave [get_waves *]
 

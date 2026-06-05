@@ -1,5 +1,5 @@
 /******************************************************************************
-* @file    helloworld.c
+* @file    main.c
 * This file implements a UART-driven menu system to interface with the
 * custom enhancedPwm IP and the Zynq's TTC (Triple Timer Counter) for interrupts.
 *
