@@ -453,16 +453,62 @@ int main()
         case 'o':
             
             #define FLAG_Q_MASK_2 (1 << 4)
-        for (int i = 0; i < 64; i++) {
-                
-                // wait for 1 falg to be set
-                u32 slv2_flag_read_2 = FINAL_OSCOPE_mReadReg(XPAR_FINAL_OSCOPE_0_BASEADDR, FINAL_OSCOPE_S00_AXI_SLV_REG2_OFFSET);
-                uint32_t current_q_bit_2;
-                current_q_bit_2 = (slv2_flag_read_2 & FLAG_Q_MASK_2);
-                printf("Current Q: %u \r\n", current_q_bit_2);
+            for (int i = 0; i < 64; i++) {
+                    
+                    // wait for 1 falg to be set
+                    u32 slv2_flag_read_2 = FINAL_OSCOPE_mReadReg(XPAR_FINAL_OSCOPE_0_BASEADDR, FINAL_OSCOPE_S00_AXI_SLV_REG2_OFFSET);
+                    uint32_t current_q_bit_2;
+                    current_q_bit_2 = (slv2_flag_read_2 & FLAG_Q_MASK_2);
+                    printf("Current Q: %u \r\n", current_q_bit_2);
 
-            }
-        break;
+                }
+            break;
+            case 'm':
+            
+                printf("Select sample rate:\r\n");
+                printf("0: Highest rate: 300 clock cycles\r\n");
+                printf("1: High rate: 600 clock cycles\r\n");
+                printf("2: Low rate: 1200 clock cycles\r\n");
+                printf("3: Lowest rate: 2400 clock cycles\r\n");
+
+                c = XUartPs_RecvByte(USART_BASEADDR);
+                putchar(c);
+                printf("\r\n");
+
+                u32 reg3 = FINAL_OSCOPE_mReadReg(XPAR_FINAL_OSCOPE_0_BASEADDR, FINAL_OSCOPE_S00_AXI_SLV_REG3_OFFSET);
+
+                // clear bits 5:4
+                reg3 &= ~(0x3 << 4);
+
+                switch(c) {
+                    case '0':
+                        reg3 |= (0 << 4);
+                        printf("Sample rate = 0\r\n");
+                        break;
+
+                    case '1':
+                        reg3 |= (1 << 4);
+                        printf("Sample rate = 1\r\n");
+                        break;
+
+                    case '2':
+                        reg3 |= (2 << 4);
+                        printf("Sample rate = 2\r\n");
+                        break;
+
+                    case '3':
+                        reg3 |= (3 << 4);
+                        printf("Sample rate = 3\r\n");
+                        break;
+
+                    default:
+                        printf("Invalid selection\r\n");
+                        break;
+                }
+
+                FINAL_OSCOPE_mWriteReg(XPAR_FINAL_OSCOPE_0_BASEADDR, FINAL_OSCOPE_S00_AXI_SLV_REG3_OFFSET, reg3);
+
+                break;
         default:
             printf("unrecognized character: %c\r\n",c);
             break;
